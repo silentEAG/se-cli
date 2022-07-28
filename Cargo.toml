@@ -21,3 +21,5 @@ serde_json = "^1.0.82"
 # dotenvy
 dotenvy = "0.15.1"
 
+tokio = { version = "^1.20.1", features = ["full"] }
+

@@ -1,3 +1,4 @@
+#![allow(unused)]
 use anyhow::Result;
 use std::{fs::File, io::Read, path::Path, str::FromStr};
 

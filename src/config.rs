@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 #![allow(unused_imports)]
 #![allow(unused_variables)]
+#![allow(unused_macros)]
 
 use crate::utils::{get_env, get_env_bool};
 
@@ -124,15 +125,15 @@ macro_rules! generate_config {
                 )+
             }
 
-            pub fn add_env(mut self) -> anyhow::Result<Self> {
-                let cfg = ConfigBuilder::from_env()?;
+            pub fn add_env(mut self) -> Self {
+                let cfg = ConfigBuilder::from_env().unwrap();
                 self.merge(cfg);
-                Ok(self)
+                self
             }
-            pub fn add_file(mut self, path: &str) -> anyhow::Result<Self> {
-                let cfg = ConfigBuilder::from_file(path)?;
+            pub fn add_file(mut self, path: &str) -> Self {
+                let cfg = ConfigBuilder::from_file(path).unwrap();
                 self.merge(cfg);
-                Ok(self)
+                self
             }
 
             pub fn build(&self) -> ConfigItems {
@@ -231,9 +232,7 @@ mod tests {
             money: i32, true, option;
         };
 
-        let builder = ConfigBuilder::default()
-            .add_env()?
-            .add_file("config.json")?;
+        let builder = ConfigBuilder::default().add_env().add_file("config.json");
         println!("{:?}", builder);
         let cfg = builder.build();
         println!("{:?}", cfg);
